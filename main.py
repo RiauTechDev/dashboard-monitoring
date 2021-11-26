@@ -3,7 +3,6 @@ Aplikasi deteksi gempa terkini
 MODULARISASI DENGAN FUNCTION
 """
 
-#Test
 def ekstraksi_data():
     """
     Tanggal: 25 November 2021
