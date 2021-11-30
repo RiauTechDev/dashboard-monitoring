@@ -78,6 +78,3 @@ def tampilkan_data(result):
     print(f"Koordinat: LS={result['koordinat']['ls']}, BT={result['koordinat']['bt']}")
     print(f"Lokasi {result['lokasi']}")
     print(f"Dirasakan {result['dirasakan']}")
-
-# if __name__ == '__main__':
-#     print('Ini adalah Package gempa terkini')
