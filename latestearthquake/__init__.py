@@ -2,79 +2,66 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def ekstraksi_data():
-    """
-    Tanggal: 25 November 2021
-    Waktu: 00:10:30 WIB
-    Magnitudo: 2.8
-    Kedalaman: 11 km
-    Lokasi: LS: 7.30 BT: 110.41
-    Pusat Gempa: Pusat gempa berada di darat 10 Km Barat Laut Kota Salatiga
-    Dirasakan: Dirasakan (Skala MMI): II Banyubiu, II Ambarawa, II Temenggungan,
-    II Pojoksari, II Brongkol, II Kalipawon, II Tegalrejo,
-    II Jambu, II Losari, II Gondorio, II Semilir, II Garung, II Bejalen
-    :return:
-    """
+def data_extraction():
     try:
         content = requests.get('https://bmkg.go.id')
     except Exception:
         return None
     if content.status_code == 200:
         soup = BeautifulSoup(content.text, 'html.parser')
-
         result = soup.find('span', {'class': 'waktu'})
         result = result.text.split(', ')
-        tanggal = result[1]
-        waktu = result[0]
+        date = result[0]
+        time = result[1]
 
         result = soup.find('div', {'class', 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
         result = result.findChildren('li')
         i = 0
-        magnitudo = None
-        kedalaman = None
+        magnitude = None
+        depth = None
         ls = None
         bt = None
-        lokasi = None
-        dirasakan = None
+        location = None
+        perceived = None
 
         for res in result:
             if i == 1:
-                magnitudo = res.text
+                magnitude = res.text
             elif i == 2:
-                kedalaman = res.text
+                depth = res.text
             elif i == 3:
-                koordinat = res.text.split(' - ')
-                ls = koordinat[0]
-                bt = koordinat[1]
+                coordinate = res.text.split(' - ')
+                ls = coordinate[0]
+                bt = coordinate[1]
             elif i == 4:
-                lokasi = res.text
+                location = res.text
             elif i == 5:
-                dirasakan = res.text
+                perceived = res.text
             i = i + 1
 
-        hasil = dict()
-        hasil['tanggal'] = tanggal
-        hasil['waktu'] = waktu
-        hasil['magnitudo'] = magnitudo
-        hasil['kedalaman'] = kedalaman
-        hasil['koordinat'] = {'ls': ls, 'bt': bt}
-        hasil['lokasi'] = lokasi
-        hasil['dirasakan'] = dirasakan
+        output = dict()
+        output['date'] = date
+        output['time'] = time
+        output['magnitude'] = magnitude
+        output['depth'] = depth
+        output['coordinate'] = {'ls': ls, 'bt': bt}
+        output['location'] = location
+        output['perceived'] = perceived
 
-        return hasil
+        return output
     else:
         return None
 
 
-def tampilkan_data(result):
+def show_data(result):
     if result is None:
-        print('Tidak menemukan data gempa terkini')
+        print('Latest earthquake data is not found')
         return
-    print('Gempa terakhir berdasarkan BMKG')
-    print(f"Tanggal {result['tanggal']}")
-    print(f"Waktu {result['waktu']}")
-    print(f"Magnitudo {result['magnitudo']}")
-    print(f"Kedalaman {result['kedalaman']}")
-    print(f"Koordinat: LS={result['koordinat']['ls']}, BT={result['koordinat']['bt']}")
-    print(f"Lokasi {result['lokasi']}")
-    print(f"Dirasakan {result['dirasakan']}")
+    print('Latest earthquacke based on BMKG')
+    print(f"Date: {result['date']}")
+    print(f"Time: {result['time']}")
+    print(f"Magnitude: {result['magnitude']}")
+    print(f"Depth: {result['depth']}")
+    print(f"Coordinate: LS={result['coordinate']['ls']}, BT={result['coordinate']['bt']}")
+    print(f"Location: {result['location']}")
+    print(f"Perceived: {result['perceived']}")

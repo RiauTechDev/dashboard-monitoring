@@ -1,12 +1,12 @@
 """
-Aplikasi deteksi gempa terkini
-MODULARISASI DENGAN FUNCTION
-MODULARISASI DENGAN PACKAGE
+The Latest Earthquake Detection App
+Modularization With Function
+Modularization With Package
 
 """
 import latestearthquake
 
 if __name__ == '__main__':
-    print('Aplikasi utama')
-    result = latestearthquake.ekstraksi_data()
-    latestearthquake.tampilkan_data(result)
+    print('Main Application')
+    result = latestearthquake.data_extraction()
+    latestearthquake.show_data(result)
