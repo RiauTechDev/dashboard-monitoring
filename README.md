@@ -1,1 +1,1 @@
-# deteksi-gempa-terkini
+# latest-earthquake-detection
