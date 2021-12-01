@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 
 
+# Extract data from Website
+
 def data_extraction():
     try:
         content = requests.get('https://bmkg.go.id')
@@ -16,6 +18,8 @@ def data_extraction():
 
         result = soup.find('div', {'class', 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
         result = result.findChildren('li')
+
+        # Assign data to variable
         i = 0
         magnitude = None
         depth = None
@@ -52,6 +56,7 @@ def data_extraction():
     else:
         return None
 
+# Showing the data already extracted
 
 def show_data(result):
     if result is None:

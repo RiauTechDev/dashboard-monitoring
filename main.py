@@ -4,6 +4,9 @@ Modularization With Function
 Modularization With Package
 
 """
+
+# Import Module and call the function
+
 import latestearthquake
 
 if __name__ == '__main__':
