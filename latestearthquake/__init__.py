@@ -9,17 +9,19 @@ def data_extraction():
         content = requests.get('https://bmkg.go.id')
     except Exception:
         return None
+
     if content.status_code == 200:
+        # Get and assign Date and Time data
         soup = BeautifulSoup(content.text, 'html.parser')
         result = soup.find('span', {'class': 'waktu'})
         result = result.text.split(', ')
         date = result[0]
         time = result[1]
 
+        # Get and assign magnitude, depth, ls, bt, location, and perceived data
         result = soup.find('div', {'class', 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
         result = result.findChildren('li')
 
-        # Assign data to variable
         i = 0
         magnitude = None
         depth = None
@@ -56,7 +58,7 @@ def data_extraction():
     else:
         return None
 
-# Showing the data already extracted
+# Show the data from extraction
 
 def show_data(result):
     if result is None:
