@@ -10,6 +10,7 @@ Modularization With Package
 import latestearthquake
 
 if __name__ == '__main__':
-    print('Main Application')
-    result = latestearthquake.data_extraction()
-    latestearthquake.show_data(result)
+    gempa_di_indonesia = latestearthquake.GempaTerkini('https://bmkg.go.id')
+    print(f'Aplikasi utama menggunakan package yang memiliki deskripsi {gempa_di_indonesia.description}')
+    gempa_di_indonesia.tampilkan_keterangan()
+    gempa_di_indonesia.run()
